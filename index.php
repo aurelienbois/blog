@@ -13,7 +13,6 @@ switch (@$_GET['action']) {
     case 'blog':
         require_once 'controllers/Blog.controller.php';
         $blogController = new BlogController();
-        require_once 'views/blog.views.php';
         $blogController->displayPosts();
         break;
     case 'contact':

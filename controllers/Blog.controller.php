@@ -10,8 +10,8 @@ class BlogController
     }
     public function displayPosts()
     {
+        global $posts; // on récupère la variable globale $posts en la créant dans l'espace de nom global
         $posts = $this->postManager->getPosts(); // on récupère les posts depuis la base de données
-        print_r($posts);
         require_once('views/blog.views.php');
     }
 }

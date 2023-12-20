@@ -26,13 +26,7 @@ ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
         </div>
         <div class="card-footer text-muted">
             <?php
-                $postDate = new DateTime($p->getDate());
-                $now = new DateTime(); // la date d'aujourd'hui
-                $interval = $now->diff($postDate); // on calcule la différence entre les deux dates
-                $days = $interval->format('%a'); // on récupère le nombre de jours
-                echo $days . ' jours';
-                // utiliser un switch pour afficher le bon texte
-                // (hier, ajourd'hui, et default affiche le nb de jours
+                echo $p->getDate(true);
             ?>
         </div>
     </a>

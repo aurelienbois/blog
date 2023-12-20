@@ -23,8 +23,23 @@ class Post {
         //self::$posts[] = $this; // fait référence à la classe elle-même
         // array push
         // array_push(self::$posts, $this);
-      
+    }
 
+    private function getPassedDays() { 
+        $postDate = new DateTime($this->date);
+        $now = new DateTime(); // la date d'aujourd'hui
+        $interval = $now->diff($postDate); // on calcule la différence entre les deux dates
+        $days = $interval->format('%a'); // on récupère le nombre de jours
+        // utiliser un switch pour afficher le bon texte
+        // (hier, ajourd'hui, et default affiche le nb de jours
+        switch($days) {
+            case 0:
+                return 'Aujourd\'hui';
+            case 1:
+                return 'Hier';
+            default:
+                return $days . ' jours';
+        }
     }
 
     public function getId() { return $this->id; }
@@ -34,12 +49,11 @@ class Post {
     public function setContent($content) { $this->content = $content; }
     public function getAuthor() { return $this->author; }
     public function setAuthor($author) { $this->author = $author; }
-    public function getDate() { return $this->date; }
+    public function getDate($lisible = false) { return $lisible ? $this->getPassedDays() : $this->date; }
     public function setDate($date) { $this->date = $date; }
     public function getHeader() { return $this->header; }
     public function setHeader($header) { $this->header = $header; }
     public function getImage() { return $this->image; }
     public function setImage($image) { $this->image = $image; }
-
 
 }

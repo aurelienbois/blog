@@ -1,26 +1,26 @@
-# Projet Blog en PHP
+# PHP Blog Project
 
-Ce projet est destiné aux étudiants en deuxième année de Bachelor. Il s'agit d'une introduction à la Programmation Orientée Objet (POO) en utilisant PHP.
+This project is intended for second-year Bachelor students. It serves as an introduction to Object-Oriented Programming (OOP) using PHP.
 
 ## Description
 
-Le projet consiste en un simple blog où les utilisateurs peuvent lire des articles. Chaque article est représenté par une carte qui contient le titre, l'auteur, l'image et le contenu de l'article. Les utilisateurs ont également la possibilité de modifier ou de supprimer des articles.
+The project involves a simple blog where users can read articles. Each article is represented by a card that contains the title, author, image, and content of the article. Users also have the option to edit or delete articles.
 
 ## Installation
 
-1. Clonez ce dépôt sur votre machine locale.
-2. Configurez votre serveur web pour pointer vers le dossier du projet.
-3. Importez le fichier `database.sql` dans votre système de gestion de base de données.
-4. Modifiez la connexion à la base avec vos informations de base de données.
+1. Clone this repository to your local machine.
+2. Configure your web server to point to the project folder.
+3. Import the database.sql file into your database management system.
+4. Modify the database connection with your database information.
 
 ## Utilisation
 
-Naviguez vers l'URL de votre serveur web. Vous devriez voir la page d'accueil du blog avec tous les articles affichés.
+Navigate to your web server's URL. You should see the blog's homepage with all articles displayed.
 
 ## Contribution
 
-Les contributions sont les bienvenues. Veuillez ouvrir une issue ou une pull request pour toute contribution.
+Contributions are welcome. Please open an issue or a pull request for any contribution.
 
 ## Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+This project is licensed under the MIT License. See the LICENSE file for more details.

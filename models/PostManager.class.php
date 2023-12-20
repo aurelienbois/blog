@@ -1,5 +1,6 @@
 <?php
 require_once('models/Model.class.php');
+require_once('models/Post.class.php');
 class PostManager extends Model { // le extends ajoute les propriétés et méthodes de Model à PostManager soit $pdo, setBdd() et getBdd(). C'est l'héritage.
     private $posts = [];
     public function getPosts() { return $this->posts; }

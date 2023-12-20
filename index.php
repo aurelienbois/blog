@@ -1,7 +1,25 @@
-<?php ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
-?>
-<h1>Index</h1>
 <?php
-$title = 'Accueil - site de YY';
-$content = ob_get_clean(); // clean c'est comme retirer la banane du pot d'échappement
-require_once 'template.php';
+
+// activer les messages d'erreur
+ini_set('display_errors', 1); // utile pour les développeurs
+ini_set('display_startup_errors', 1); // utile pour les développeurs
+error_reporting(E_ALL);
+
+
+switch (@$_GET['action']) {
+    case 'accueil':
+        require_once 'views/accueil.views.php';
+        break;
+    case 'blog':
+        require_once 'controllers/Blog.controller.php';
+        $blogController = new BlogController();
+        require_once 'views/blog.views.php';
+        $blogController->displayPosts();
+        break;
+    case 'contact':
+        require_once 'views/contact.views.php';
+        break;
+    default:
+        require_once 'views/accueil.views.php'; // page par défaut
+        break;
+}

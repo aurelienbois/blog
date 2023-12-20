@@ -1,18 +1,11 @@
 <?php
-// activer les messages d'erreur
-ini_set('display_errors', 1); // utile pour les développeurs
-ini_set('display_startup_errors', 1); // utile pour les développeurs
-error_reporting(E_ALL);
-require_once ('models/Post.class.php');
-require_once ('models/PostManager.class.php');
 
-$postManager = new PostManager();
-$postManager->getPostsFromDb(); // on récupère les posts depuis la base de données
+require_once ('models/Post.class.php');
 
 ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
 ?>
 <h1>Blog</h1>
-<?php foreach ($postManager->getPosts() as $p) { ?>
+<?php if (!empty($post)) foreach ($posts as $p) { ?>
 <div class="card mb-3">
     <a href="#" class="post text-body text-decoration-none">
         <h3 class="card-header"><?= $p->getHeader() ?></h3>

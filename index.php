@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 // routeur
 switch (@$_GET['action']) {
     case 'accueil':
-        require_once 'views/accueil.views.php';
+        require_once 'views/accueil.view.php';
         break;
     case 'blog':
         require_once 'controllers/Blog.controller.php';
@@ -16,9 +16,9 @@ switch (@$_GET['action']) {
         $blogController->displayPosts();
         break;
     case 'contact':
-        require_once 'views/contact.views.php';
+        require_once 'views/contact.view.php';
         break;
     default:
-        require_once 'views/accueil.views.php'; // page par défaut
+        require_once 'views/accueil.view.php'; // page par défaut
         break;
 }

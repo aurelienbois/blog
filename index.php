@@ -5,7 +5,7 @@ ini_set('display_errors', 1); // utile pour les développeurs
 ini_set('display_startup_errors', 1); // utile pour les développeurs
 error_reporting(E_ALL);
 
-
+// routeur
 switch (@$_GET['action']) {
     case 'accueil':
         require_once 'views/accueil.views.php';

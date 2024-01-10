@@ -1,0 +1,61 @@
+@startuml
+
+class Post {
+    - id: int
+    - header: string
+    - title: string
+    - author: string
+    - image: string
+    - body: text
+    - date: date
+    + getId(): int
+    + getTitle(): string
+    + setTitle(title: string): void
+    + getHeader(): string
+    + getAuthor(): string
+    + getImage(): string
+    + getBody(): text
+    + getDate(): date
+}
+
+class PostManager {
+    - posts: Post[]
+    + getPosts(): Post[]
+    + addPost(post: Post): void
+    + getPostsFromDb(): void
+}
+
+class Model {
+    {static} - pdo: PDO
+    {static} + setBdd(): void
+    + getBdd(): PDO
+}
+
+class BlogController {
+    - postManager: PostManager
+    + displayPosts(): void
+}
+
+class TemplateView {
+    + title: string
+    + content: string
+    + display(): void
+}
+
+class BlogView {
+    - posts: Post[]
+    + display(): void
+}
+
+class HomeView {
+    + display(): void
+}
+
+PostManager -- "*" Post : contains
+PostManager -up-|> Model : extends
+BlogController -right-> PostManager : uses
+
+TemplateView <|-- BlogView
+TemplateView <|-- HomeView
+
+@enduml

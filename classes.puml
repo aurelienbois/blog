@@ -1,4 +1,5 @@
 @startuml
+allowmixing
 
 class Post {
     - id: int
@@ -36,26 +37,24 @@ class BlogController {
     + displayPosts(): void
 }
 
-class TemplateView {
-    + title: string
-    + content: string
-    + display(): void
+
+
+package "Views" {
+    class Template {
+        + title: string
+        + content: string
+        + display(): void
+    }
+    component index
 }
 
-class BlogView {
-    - posts: Post[]
-    + display(): void
-}
-
-class HomeView {
-    + display(): void
-}
 
 PostManager -- "*" Post : contains
 PostManager -up-|> Model : extends
-BlogController -right-> PostManager : uses
 
-TemplateView <|-- BlogView
-TemplateView <|-- HomeView
+BlogController -right-> PostManager : uses
+BlogController ..> index : displays >>
+
+Template <|-- index
 
 @enduml

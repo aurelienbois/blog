@@ -1,3 +1,11 @@
+<?php
+$listeLiens = [
+  'Accueil' => './accueil',
+  'Blog' => './blog',
+  'Contact' => './contact'
+];
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,14 +23,29 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="./">Accueil
-            <span class="visually-hidden">(actif)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./blog.php">Blog</a>
-        </li>
+        <?php
+        foreach ($listeLiens as $titre => $lien) {
+        ?>
+          <li class="nav-item">
+            <a
+              class="nav-link<?php
+                // strtolower() permet de mettre en minuscules
+                // ça permet de comparer par ex. Accueil avec accueil
+                if (strtolower($titre) === $_GET['action']) {
+                  echo ' active'; // l'espace avant active est important
+                  // car il y a un espace entre les classes
+                  // sinon ça ferait class="nav-linkactive"
+                }
+              ?>"
+              href="<?= $lien ?>"
+            >
+              <?= $titre ?>
+              <span class="visually-hidden">(actif)</span>
+            </a>
+          </li>
+        <?php
+        }
+        ?>
       </ul>
       <form class="d-flex">
         <input class="form-control me-sm-2" type="search" placeholder="Search">

@@ -1,5 +1,4 @@
 <?php
-
 // activer les messages d'erreur
 ini_set('display_errors', 1); // utile pour les développeurs
 ini_set('display_startup_errors', 1); // utile pour les développeurs

@@ -22,3 +22,5 @@ switch (@$_GET['action']) {
         require_once 'views/accueil.view.php'; // page par défaut
         break;
 }
+
+?>

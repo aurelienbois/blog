@@ -31,7 +31,7 @@ $listeLiens = [
               class="nav-link<?php
                 // strtolower() permet de mettre en minuscules
                 // ça permet de comparer par ex. Accueil avec accueil
-                if (strtolower($titre) === $_GET['action']) {
+                if (strtolower($titre) === @$_GET['action'] ) {
                   echo ' active'; // l'espace avant active est important
                   // car il y a un espace entre les classes
                   // sinon ça ferait class="nav-linkactive"

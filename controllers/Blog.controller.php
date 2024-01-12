@@ -21,4 +21,9 @@ class BlogController
         $post = $this->postManager->getPostById($id);
         require_once('views/singlePost.view.php');
     }
+
+    public function displayAddPostForm()
+    {
+        require_once('views/addPost.view.php');
+    }
 }

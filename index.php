@@ -28,12 +28,25 @@ $url = explode(
         $id = $lastUrl;
     } elseif (isset($map[$lastUrl])) {
         list($controller, $action, $id) = $map[$lastUrl];
-    } else {
+    } 
+    // on va gérer les cas où l'url est de la forme /blog/add
+    elseif (end($url) === 'add') {
+        $controller = 'blog';
+        $action = 'add';
+        $id = '';
+    }
+    else {
         $controller = 'accueil';
         $action = 'accueil';
         $id = '';
+        echo '<br>404<br>';
     }
-
+    echo '<br>';
+    echo 'controller : ' . $controller . '<br>';
+    echo 'action : ' . $action . '<br>';
+    echo 'id : ' . $id . '<br>';
+    
+    
 // routeur
 switch ($controller) {
     case 'accueil':
@@ -42,9 +55,13 @@ switch ($controller) {
     case 'blog':
         require_once 'controllers/Blog.controller.php';
         $blogController = new BlogController();
+      
         if ($action === 'lire') {
             $blogController->displaySinglePost($id);
             break; // on sort du switch
+        } elseif ($action === 'add') {
+            $blogController->displayAddPostForm();
+            break;
         }
         $blogController->displayPosts();
         break;

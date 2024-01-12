@@ -7,7 +7,7 @@ ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
 <h1>Blog</h1>
 <?php  foreach ($posts as $p) { ?>
 <div class="card mb-3">
-    <a href="#" class="post text-body text-decoration-none">
+    <a href="./blog/lire/<?= $p->getId() ?>" class="post text-body text-decoration-none">
         <h3 class="card-header"><?= $p->getHeader() ?></h3>
         <div class="card-body">
             <h5 class="card-title"><?= $p->getTitle() ?></h5>

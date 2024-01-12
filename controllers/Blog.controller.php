@@ -14,4 +14,11 @@ class BlogController
         $posts = $this->postManager->getPosts(); // on récupère les posts depuis la base de données
         require_once('views/blog.view.php');
     }
+
+    public function displaySinglePost($id)
+    {
+        global $post;
+        $post = $this->postManager->getPostById($id);
+        require_once('views/singlePost.view.php');
+    }
 }

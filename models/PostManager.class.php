@@ -21,4 +21,22 @@ class PostManager extends Model { // le extends ajoute les propriétés et méth
             ));
         }
     }
+    public function getPostById($id) {
+       
+        $req = $this->getBdd()->prepare('SELECT * FROM posts WHERE id = :id');
+        $req->bindValue(':id', $id, PDO::PARAM_INT);
+        $req->execute();
+        $post = $req->fetch(PDO::FETCH_ASSOC);
+        // todo : vérifier que $post n'est pas vide
+       
+        return new Post(
+            $post['id'], // champ de la table posts
+            $post['title'],
+            $post['header'],
+            $post['author'],
+            $post['image'],
+            $post['body'],
+            $post['date']
+        );
+    }
 }

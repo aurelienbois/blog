@@ -42,6 +42,10 @@ switch ($controller) {
     case 'blog':
         require_once 'controllers/Blog.controller.php';
         $blogController = new BlogController();
+        if ($action === 'lire') {
+            $blogController->displaySinglePost($id);
+            break; // on sort du switch
+        }
         $blogController->displayPosts();
         break;
     case 'contact':

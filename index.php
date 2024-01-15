@@ -13,44 +13,61 @@ if (substr($base, -1) === '/') {
     $base = substr($base, 0, -1);
 }
 define('BASE_URI', $base);
-echo BASE_URI;
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', BASE_URI.'/accueil', ['accueil', 'accueil', '']);
     $r->addRoute('GET', BASE_URI.'/blog', ['blog', 'blog', '']);
     $r->addRoute('GET', BASE_URI.'/contact', ['contact', 'contact', '']);
-    $r->addRoute('GET', BASE_URI.'/blog/{id:\d+}', ['blog', 'lire', '{id}']);
+    $r->addRoute('GET', BASE_URI.'/blog/lire/{id:\d+}', ['blog', 'lire', '{id}']);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-echo '<pre>';
-var_dump($routeInfo);
-echo '</pre>';
 switch ($routeInfo[0]) {
-    case Dispatcher::NOT_FOUND: // Use the imported Dispatcher class
-        // ... 404 Not Found
+    case Dispatcher::NOT_FOUND:
+        header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found', true, 404);
         $controller = 'accueil';
         $action = 'accueil';
         $id = '';
         break;
-    case Dispatcher::METHOD_NOT_ALLOWED: // Use the imported Dispatcher class
+    case Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
-        // directly returns "405 Method Not Allowed"
-        
-
+        header($_SERVER["SERVER_PROTOCOL"] . ' 405 Method Not Allowed', true, 405);
+        exit;
         break;
-    case Dispatcher::FOUND: // Use the imported Dispatcher class
-        list($controller, $action, $id) = $routeInfo[1];
-        echo 'controller: ', $controller, ', action: ' , $action , ', id: ' , $id;
-        // ... call $handler with $vars
-
+    case Dispatcher::FOUND:
+        list($controller, $action) = $routeInfo[1];
+        switch ($controller) {
+            case 'accueil':
+                require_once 'views/accueil.view.php';
+                break;
+            case 'blog':
+                require_once 'controllers/Blog.controller.php';
+                $blogController = new BlogController();
+                if ($action === 'lire') {
+                    try {
+                        $id = $routeInfo[2]['id'];
+                    } catch (Exception $e) {
+                        header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found', true, 404);
+                        $controller = 'accueil';
+                        $action = 'accueil';
+                        $id = '';
+                    }
+                    $blogController->displaySinglePost($id);
+                    break; // on sort du switch
+                }
+                $blogController->displayPosts();
+                break;
+            case 'contact':
+                require_once 'views/contact.view.php';
+                break;
+            default:
+                require_once 'views/accueil.view.php'; // page par défaut
+                break;
+        }
         break;
 }
 
-
-?>
-
-
+require_once 'views/accueil.view.php'; // page par défaut

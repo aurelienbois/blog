@@ -1,19 +1,23 @@
 <?php
 $listeLiens = [
-  'Accueil' => './accueil',
-  'Blog' => './blog',
-  'Contact' => './contact'
+  'Accueil' => '/accueil',
+  'Blog' => '/blog',
+  'Contact' => '/contact'
 ];
-?>
 
-<!DOCTYPE html>
+// ajouter la BASE_URI au début de chaque lien
+$listeLiens = array_map(function($lien) {
+  return BASE_URI . $lien;
+}, $listeLiens);
+
+?><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
-    <link rel="stylesheet" href="public/styles.css">
+    <link rel="stylesheet" href="<?= BASE_URI ?>/public/styles.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">

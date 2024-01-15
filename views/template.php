@@ -2,7 +2,7 @@
 $listeLiens = [
   'Accueil' => '/accueil',
   'Blog' => '/blog',
-  'Contact' => '/contact'
+  'Contact' => '#'
 ];
 
 // ajouter la BASE_URI au début de chaque lien

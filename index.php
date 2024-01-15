@@ -1,76 +1,56 @@
 <?php
-// activer les messages d'erreur
-ini_set('display_errors', 1); // utile pour les développeurs
-ini_set('display_startup_errors', 1); // utile pour les développeurs
+
+use FastRoute\Dispatcher; // Import the FastRoute\Dispatcher class
+
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo $_SERVER['REQUEST_URI'];
+require 'vendor/autoload.php';
 
-$url = explode(
-    '/',
-    filter_var(
-        $_SERVER['REQUEST_URI'],
-        FILTER_SANITIZE_URL
-    ));
+$base = dirname($_SERVER['SCRIPT_NAME']);
+if (substr($base, -1) === '/') {
+    $base = substr($base, 0, -1);
+}
+define('BASE_URI', $base);
+echo BASE_URI;
 
-    $lastUrl = end($url);
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+    $r->addRoute('GET', BASE_URI.'/accueil', ['accueil', 'accueil', '']);
+    $r->addRoute('GET', BASE_URI.'/blog', ['blog', 'blog', '']);
+    $r->addRoute('GET', BASE_URI.'/contact', ['contact', 'contact', '']);
+    $r->addRoute('GET', BASE_URI.'/blog/{id:\d+}', ['blog', 'lire', '{id}']);
+});
 
-    $map = [
-        'accueil' => ['accueil', 'accueil', ''],
-        'blog' => ['blog', 'blog', ''],
-        'contact' => ['contact', 'contact', ''],
-        '' => ['accueil', 'accueil', '']
-    ];
-    
-    if (is_numeric($lastUrl)) {
-        $controller = 'blog';
-        $action = 'lire';
-        $id = $lastUrl;
-    } elseif (isset($map[$lastUrl])) {
-        list($controller, $action, $id) = $map[$lastUrl];
-    } 
-    // on va gérer les cas où l'url est de la forme /blog/add
-    elseif (end($url) === 'add') {
-        $controller = 'blog';
-        $action = 'add';
-        $id = '';
-    }
-    else {
+$httpMethod = $_SERVER['REQUEST_METHOD'];
+$uri = $_SERVER['REQUEST_URI'];
+
+$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+echo '<pre>';
+var_dump($routeInfo);
+echo '</pre>';
+switch ($routeInfo[0]) {
+    case Dispatcher::NOT_FOUND: // Use the imported Dispatcher class
+        // ... 404 Not Found
         $controller = 'accueil';
         $action = 'accueil';
         $id = '';
-        echo '<br>404<br>';
-    }
-    echo '<br>';
-    echo 'controller : ' . $controller . '<br>';
-    echo 'action : ' . $action . '<br>';
-    echo 'id : ' . $id . '<br>';
-    
-    
-// routeur
-switch ($controller) {
-    case 'accueil':
-        require_once 'views/accueil.view.php';
         break;
-    case 'blog':
-        require_once 'controllers/Blog.controller.php';
-        $blogController = new BlogController();
-      
-        if ($action === 'lire') {
-            $blogController->displaySinglePost($id);
-            break; // on sort du switch
-        } elseif ($action === 'add') {
-            $blogController->displayAddPostForm();
-            break;
-        }
-        $blogController->displayPosts();
+    case Dispatcher::METHOD_NOT_ALLOWED: // Use the imported Dispatcher class
+        $allowedMethods = $routeInfo[1];
+        // directly returns "405 Method Not Allowed"
+        
+
         break;
-    case 'contact':
-        require_once 'views/contact.view.php';
-        break;
-    default:
-        require_once 'views/accueil.view.php'; // page par défaut
+    case Dispatcher::FOUND: // Use the imported Dispatcher class
+        list($controller, $action, $id) = $routeInfo[1];
+        echo 'controller: ', $controller, ', action: ' , $action , ', id: ' , $id;
+        // ... call $handler with $vars
+
         break;
 }
 
+
 ?>
+
+

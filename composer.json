@@ -1,0 +1,13 @@
+{
+    "name": "bachelor2/blog",
+    "type": "project",
+    "require": {
+        "nikic/fast-route": "^1.3"
+    },
+    "authors": [
+        {
+            "name": "Aurélien Bois",
+            "email": "cci@aurelienbois.fr"
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+/* le style est sombre */
+body {
+  background-color: #333;
+  color: #fff;
+}
+a::after {
+    content: "🔗";
+  }

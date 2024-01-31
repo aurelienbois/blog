@@ -61,6 +61,8 @@ $listeLiens = array_map(function($lien) {
           <?= (!empty($q) ? ' value="'.htmlspecialchars($q).'"' : '') ?>>
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Chercher</button>
       </form>
+      &nbsp;
+      <a href="<?= BASE_URI ?>/blog/add"><button type="button" class="btn btn-secondary">Ajouter un post</button></a>
     </div>
   </div>
 </nav>

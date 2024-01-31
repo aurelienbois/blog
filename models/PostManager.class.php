@@ -3,23 +3,36 @@ require_once('models/Model.class.php');
 require_once('models/Post.class.php');
 class PostManager extends Model { // le extends ajoute les propriétés et méthodes de Model à PostManager soit $pdo, setBdd() et getBdd(). C'est l'héritage.
     private $posts = [];
+
+
+
     public function getPosts() { return $this->posts; }
-    public function addPost(Post $post) { $this->posts[] = $post; }
+    public function addPost(Post $post) {
+        $req = $this->getBdd()->prepare(
+            'INSERT INTO posts (title, header, author, image, body, date) 
+            VALUES (:title, :header, :author, :image, :body, NOW())'
+        );
+
+        $req->bindValue(':title', $post->getTitle(), PDO::PARAM_STR);
+        $req->bindValue(':header', $post->getHeader(), PDO::PARAM_STR);
+        $req->bindValue(':author', $post->getAuthor(), PDO::PARAM_STR);
+        $req->bindValue(':image', $post->getImage(), PDO::PARAM_STR);
+        $req->bindValue(':body', $post->getContent(), PDO::PARAM_STR);
+
+        $req->execute();
+    }
     public function getPostsFromDb() {
         $req = $this->getBdd()->prepare('SELECT * FROM posts');
         $req->execute();
-        $posts = $req->fetchAll(PDO::FETCH_ASSOC); 
+        $posts = $req->fetchAll(PDO::FETCH_ASSOC);
+        // Convertir les résultats en objets Post
+        $resultPosts = [];
         foreach ($posts as $p) {
-            $this->addPost(new Post(
-                $p['id'], // champ de la table posts
-                $p['title'],
-                $p['header'],
-                $p['author'],
-                $p['image'],
-                $p['body'],
-                $p['date']
-            ));
+            $resultPosts[] = new Post(
+                $p['id'], $p['title'], $p['header'], $p['author'], $p['image'], $p['body'], $p['date']
+            );
         }
+        $this->posts = $resultPosts;
     }
     public function getPostById($id) {
        

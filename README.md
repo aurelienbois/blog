@@ -14,7 +14,7 @@ The project involves a simple blog where users can read articles. Each article i
 4. Import the database.sql file into your database management system.
 5. Modify the database connection in .env with your database information.
 
-## Utilisation
+## Use the project
 
 Navigate to your web server's URL. You should see the blog's homepage with all articles displayed.
 

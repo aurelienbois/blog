@@ -39,4 +39,31 @@ class PostManager extends Model { // le extends ajoute les propriétés et méth
             $post['date']
         );
     }
+
+    public function searchPosts($query) {
+        $query = '%' . $query . '%';
+        $req = $this->getBdd()->prepare('
+        (
+            SELECT * FROM posts
+            WHERE MATCH(title, header, body) AGAINST(:query IN NATURAL LANGUAGE MODE)
+        )
+        UNION
+        (
+            SELECT * FROM posts
+            WHERE title LIKE :query OR header LIKE :query OR body LIKE :query
+        );
+        ');
+        $req->bindValue(':query', '%'.$query.'%', PDO::PARAM_STR);
+        $req->execute();
+        $posts = $req->fetchAll(PDO::FETCH_ASSOC);
+        // Convertir les résultats en objets Post
+        $resultPosts = [];
+        foreach ($posts as $p) {
+            $resultPosts[] = new Post(
+                $p['id'], $p['title'], $p['header'], $p['author'], $p['image'], $p['body'], $p['date']
+            );
+        }
+        return $resultPosts;
+    }
+    
 }

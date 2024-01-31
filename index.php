@@ -16,11 +16,12 @@ if (substr($base, -1) === '/') {
 }
 define('BASE_URI', $base);
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) { // $r représente le routeur
     $r->addRoute('GET', BASE_URI.'/accueil', ['accueil', 'accueil', '']);
     $r->addRoute('GET', BASE_URI.'/blog', ['blog', 'blog', '']);
-    $r->addRoute('GET', BASE_URI.'/contact', ['contact', 'contact', '']);
     $r->addRoute('GET', BASE_URI.'/blog/lire/{id:\d+}', ['blog', 'lire', '{id}']);
+    $r->addRoute('GET', BASE_URI.'/contact', ['contact', 'contact', '']);
+    $r->addRoute('GET', BASE_URI.'/search{q}', ['SearchController', 'search', '{q}']);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -58,9 +59,18 @@ switch ($routeInfo[0]) {
                         $id = '';
                     }
                     $blogController->displaySinglePost($id);
-                    break; // on sort du switch
+                    break;
                 }
                 $blogController->displayPosts();
+                break;
+            case 'SearchController':
+                require_once 'controllers/SearchController.php';
+                $searchController = new SearchController();
+                if ($action === 'search') {
+                    $q = $routeInfo[2]['q'];
+                    $searchController->search($q);
+                    break;
+                }
                 break;
             case 'contact':
                 require_once 'views/contact.view.php';

@@ -53,7 +53,12 @@ $listeLiens = array_map(function($lien) {
         ?>
       </ul>
       <form class="d-flex" method="get" action="<?= BASE_URI ?>/search">
-        <input class="form-control me-sm-2" type="search" name="q" placeholder="Recherche">
+        <input
+          class="form-control me-sm-2"
+          type="search"
+          name="q"
+          placeholder="Recherche"
+          <?= (!empty($q) ? ' value="'.htmlspecialchars($q).'"' : '') ?>>
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Chercher</button>
       </form>
     </div>

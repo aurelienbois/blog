@@ -6,7 +6,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require 'vendor/autoload.php';
+require 'vendor/autoload.php'; // cela charge toutes les classes de Composer (FastRoute, etc.)
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 
 $base = dirname($_SERVER['SCRIPT_NAME']);
 if (substr($base, -1) === '/') {

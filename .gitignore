@@ -1,1 +1,2 @@
 /vendor/
+.env # for security reasons, you do not want to push this file to your repo

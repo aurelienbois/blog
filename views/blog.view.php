@@ -2,11 +2,22 @@
 
 require_once ('models/Post.class.php');
 
+
 ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
 ?>
 <h1>Blog</h1>
 <div class="row">
-<?php  foreach ($posts as $p) { ?>
+<?php  foreach ($posts as $p) { 
+    
+    $content = $p->getContent();
+    $firstSentence = strstr($content, '.', true);
+    if ($firstSentence !== false) {
+        $firstSentence .= '...';
+    } else {
+        $firstSentence = $content;
+    }
+
+    ?>
     <div class="col-md-6">
         <div class="card mb-3">
             <a href="./blog/lire/<?= $p->getId() ?>" class="post text-body text-decoration-none">
@@ -17,7 +28,7 @@ ob_start(); // start c'est comme une banane dans le pot d'échappement de PHP
                 </div>
                 <img src="<?= $p->getImage() ?>" alt="..." class="img-fluid" style="width: 100%">
                 <div class="card-body">
-                    <p class="card-text"><?= nl2br($p->getContent()) ?></p>
+                    <p class="card-text"><?= nl2br($firstSentence) ?></p>
                 </div>
                 <div class="card-footer text-muted">
                     <?php

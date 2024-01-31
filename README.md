@@ -12,7 +12,7 @@ The project involves a simple blog where users can read articles. Each article i
 2. Install dependencies using Composer. If you don't have Composer installed, you can download it from [https://getcomposer.org/](https://getcomposer.org/). Once you have Composer installed, navigate to the project directory in your terminal and run `composer install`.
 3. Configure your web server to point to the project folder.
 4. Import the database.sql file into your database management system.
-5. Modify the database connection with your database information.
+5. Modify the database connection in .env with your database information.
 
 ## Utilisation
 

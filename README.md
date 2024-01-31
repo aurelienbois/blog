@@ -18,6 +18,10 @@ The project involves a simple blog where users can read articles. Each article i
 
 Navigate to your web server's URL. You should see the blog's homepage with all articles displayed.
 
+## How it works
+
+![Classes diagram](classes.png)
+
 ## Contribution
 
 Contributions are welcome. Please open an issue or a pull request for any contribution.

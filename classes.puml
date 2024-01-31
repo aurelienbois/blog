@@ -40,11 +40,7 @@ class BlogController {
 
 
 package "Views" {
-    class Template {
-        + title: string
-        + content: string
-        + display(): void
-    }
+    component template
     component index
 }
 
@@ -55,6 +51,6 @@ PostManager -up-|> Model : extends
 BlogController -right-> PostManager : uses
 BlogController ..> index : displays >>
 
-Template <|-- index
+template <|-- index
 
 @enduml

@@ -1,16 +1,14 @@
 <?php
-
-use FastRoute\Dispatcher; // Import the FastRoute\Dispatcher class
-
 ini_set('display_errors', 1); 
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require 'vendor/autoload.php'; // cela charge toutes les classes de Composer (FastRoute, etc.)
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+use FastRoute\Dispatcher; // Import the FastRoute\Dispatcher class
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // __DIR__ est le dossier courant donc le .env est à la racine du projet
+$dotenv->load();
 
 $base = dirname($_SERVER['SCRIPT_NAME']);
 if (substr($base, -1) === '/') {
